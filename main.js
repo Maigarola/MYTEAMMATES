@@ -14,10 +14,9 @@ fetch(url, {}).then(function (response) {
     data = json;
 
     let myteammates = data.people;
+    let table_body = document.getElementById("t_body");
 
     printtable(myteammates);
-
-    let table_body = document.getElementById("t_body");
 
     function printtable(lista) {
 
@@ -34,7 +33,7 @@ fetch(url, {}).then(function (response) {
                 ${window(lista[i])}
             </tr>`;
 
-            t_body.innerHTML = template;
+            table_body.innerHTML = template;
         }
 
     }
@@ -42,25 +41,25 @@ fetch(url, {}).then(function (response) {
     function window(element) {
 
         let template = "";
-        
+        ournick = (element.contact_info.nickName).replace(/\s/g, "_");
         template += `
-        <td data-fancybox data-options= '{"src": "#exampleModal", "smallBtn" : false}' href="javascript:;"><button class="button">More info</button></td>
-            
-        <div class="mywindow" id="exampleModal">
-
+        <td ><button class="button" data-fancybox data-options='{"src":"#${ournick}","touch": false, "smallBtn" : false}' href="javascript:;">More info</button>            
+        <div class = "thewindow" id= "${ournick}">
             <h5>${element.name}</h5>
             <img src="${element.contact_info.photo}" alt="photo" height = "200px"> 
             <p><span>NickName</span> ${element.contact_info.nickName} </p>
             <p><span>Phone</span> ${element.contact_info.phone} </p>
             <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
-            <p><span>Contact</span> <button class="e_button" href= "mailto:${element.contact_info.email}">Send me a mail</button></p>
+            <p><span>Contact</span> <button class="e_button" href= "mailto:${element.contact_info.email}" target="_top">Send me a mail</button></p>
 
             <p><button data-fancybox-close class="button">Close</button></p>
             </div>
+            </td>
             `
-            return template;
-            
+        return template;
+
     }
+
 
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
