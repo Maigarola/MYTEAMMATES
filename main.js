@@ -46,7 +46,7 @@ fetch(url, {}).then(function (response) {
         template += `
         <td data-fancybox data-options= '{"src": "#exampleModal", "smallBtn" : false}' href="javascript:;"><button class="button">More info</button></td>
             
-        <div class = "window" id="exampleModal">
+        <div class="mywindow" id="exampleModal">
 
             <h5>${element.name}</h5>
             <img src="${element.contact_info.photo}" alt="photo" height = "200px"> 

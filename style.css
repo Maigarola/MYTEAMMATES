@@ -3,6 +3,12 @@
   font-family: Verdana;
 }
 
+.span {
+  font-weight: bold;
+}
+
+/* header */
+
 header {
   height: 250px;
   background-image: url(./images/banner.gif);
@@ -11,27 +17,23 @@ header {
   background-repeat: no-repeat;
   font-size: 50px;
   text-align: end;
-  margin-bottom: 10px;
+}
+header h2 {
+  padding: 80px;
 }
 
+
+/* buttons */
 .button {
-  display: inline-block;
   border-radius: 4px;
   background-color: #207420;
   border: none;
   color: #FFFFFF;
   text-align: center;
   cursor: pointer;
-  padding: 3px;
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-.span {
-  font-weight: bold;
-}
-
-header h2 {
-  padding: 80px;
+  padding: 10px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 100%;
 }
 
 .e_button {
@@ -45,11 +47,12 @@ header h2 {
   padding: 3px;
 }
 
-.window {
-  display: none;
+.thewindow {
+  /* display: none; */
   max-width: 500px;
 }
 
+/* table */
 table {
   width: 100%;
   text-align: center;
@@ -57,13 +60,10 @@ table {
 }
 
 tbody tr:hover {
-  background-color: rgba(0, 0, 0, .075)
+  background-color: rgba(0, 0, 0, .075);
 }
 
 td {
   padding: 10px;
-}
 
-thead td {
-  margin-bottom: 30px;
 }
