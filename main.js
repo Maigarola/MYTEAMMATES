@@ -42,14 +42,15 @@ fetch(url, {}).then(function (response) {
     function window(element) {
 
         let template = "";
+        
         template += `
         <td data-fancybox data-options= '{"src": "#exampleModal", "smallBtn" : false}' href="javascript:;"><button class="button">More info</button></td>
             
         <div class = "window" id="exampleModal">
-            ${console.log(element.name)}
+
             <h5>${element.name}</h5>
             <img src="${element.contact_info.photo}" alt="photo" height = "200px"> 
-            <h6><span>NickName</span> ${element.contact_info.nickName} </p>
+            <p><span>NickName</span> ${element.contact_info.nickName} </p>
             <p><span>Phone</span> ${element.contact_info.phone} </p>
             <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
             <p><span>Contact</span> <button class="e_button" href= "mailto:${element.contact_info.email}">Send me a mail</button></p>
