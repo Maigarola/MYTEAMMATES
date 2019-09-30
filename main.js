@@ -33,7 +33,6 @@ fetch(url, {
             <td> ${lista[i].team}</td>
             <td> ${lista[i].seniority}</td>
             <td> <button class = "mybutton data-fancybox"> More info </button></td>
-            test
 
         </tr>
         `;
