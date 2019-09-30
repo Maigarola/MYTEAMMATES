@@ -8,6 +8,11 @@ span {
 }
 
 /* header */
+.filters {
+  background-color: rgba(0, 0, 0, .075);
+  padding-bottom: 20px;
+}
+
 .mycheckboxs {
   display: flex;
   padding: 10px;
@@ -19,8 +24,15 @@ span {
   flex-direction: column;
   flex-wrap: wrap;
   height: 100px;
-  background-color: rgba(0, 0, 0, .075);
   padding: 10px;
+}
+
+#searching {
+  display: flex;
+  justify-content: center;
+  padding:10px;
+  height: 30px;
+
 }
 
 header {
