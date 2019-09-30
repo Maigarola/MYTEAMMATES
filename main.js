@@ -3,8 +3,7 @@
 // Create the general table with general information
 let url = "https://api.myjson.com/bins/adpvt";
 
-fetch(url, {
-}).then(function (response) {
+fetch(url, {}).then(function (response) {
     if (response.ok) {
         return response.json();
     }
@@ -16,6 +15,8 @@ fetch(url, {
 
     let myteammates = data.people;
 
+    console.log(myteammates[0]);
+    
     printtable(myteammates);
 
     let table_body = document.getElementById("t_body");
@@ -32,7 +33,12 @@ fetch(url, {
             <td> ${lista[i].role}</td>
             <td> ${lista[i].team}</td>
             <td> ${lista[i].seniority}</td>
-            <td> <button class = "mybutton data-fancybox"> More info </button></td>
+
+            <td data-fancybox data-options='{"src": "#exampleModal", "touch": false, "smallBtn" : false}' href="javascript:;" "><button class="button">More info</button></td>
+            
+            <div style="display:none; max-width:500px;" id="exampleModal">
+            <img src="${lista[i].name}" alt="contact"> 
+            </div>
 
         </tr>
         `;

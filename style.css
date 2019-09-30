@@ -2,3 +2,18 @@
     margin: 10px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+.button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #207420;
+    border: none;
+    color: #FFFFFF;
+    text-align: center;
+    cursor: pointer;
+    padding: 3px;
+  }
+  
+  .button {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  }
+  }
