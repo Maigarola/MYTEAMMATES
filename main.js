@@ -31,7 +31,7 @@ fetch(url, {}).then(function (response) {
                 <td> ${lista[i].role}</td>
                 <td> ${lista[i].team}</td>
                 <td> ${lista[i].seniority}</td>
-                ${window(i,lista)}
+                ${window(lista[i])}
             </tr>`;
 
             t_body.innerHTML = template;
@@ -39,20 +39,20 @@ fetch(url, {}).then(function (response) {
 
     }
 
-    function window(p, lista) {
+    function window(element) {
 
         let template = "";
         template += `
         <td data-fancybox data-options= '{"src": "#exampleModal", "smallBtn" : false}' href="javascript:;"><button class="button">More info</button></td>
             
         <div class = "window" id="exampleModal">
-            ${lista[p].name}
-            <h5>${lista[p].name}</h5>
-            <img src="${lista[p].contact_info.photo}" alt="photo" height = "200px"> 
-            <h6><span>NickName</span> ${lista[p].contact_info.nickName} </p>
-            <p><span>Phone</span> ${lista[p].contact_info.phone} </p>
-            <p><span>Site</span> <a href=${lista[p].contact_info.site}> ${lista[p].contact_info.site} </a></p>
-            <p><span>Contact</span> <button class="e_button" href= "mailto:${lista[p].contact_info.email}">Send me a mail</button></p>
+            ${console.log(element.name)}
+            <h5>${element.name}</h5>
+            <img src="${element.contact_info.photo}" alt="photo" height = "200px"> 
+            <h6><span>NickName</span> ${element.contact_info.nickName} </p>
+            <p><span>Phone</span> ${element.contact_info.phone} </p>
+            <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
+            <p><span>Contact</span> <button class="e_button" href= "mailto:${element.contact_info.email}">Send me a mail</button></p>
 
             <p><button data-fancybox-close class="button">Close</button></p>
             </div>
