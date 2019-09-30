@@ -97,3 +97,7 @@ css
             table_body.append(tr);
 
         }
+
+<p>Please email us at <a id="dir" href="mailto:nysl@chisoccer.org" target="_top"> nysl@chisoccer.org</a> </p>
+
+

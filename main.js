@@ -45,14 +45,14 @@ fetch(url, {}).then(function (response) {
         template += `
         <td ><button class="button" data-fancybox data-options='{"src":"#${ournick}","touch": false, "smallBtn" : false}' href="javascript:;">More info</button>            
         <div class = "thewindow" id= "${ournick}">
-            <h5>${element.name}</h5>
+            <h3>${element.name}</h3>
             <img src="${element.contact_info.photo}" alt="photo" height = "200px"> 
             <p><span>NickName</span> ${element.contact_info.nickName} </p>
             <p><span>Phone</span> ${element.contact_info.phone} </p>
             <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
-            <p><span>Contact</span> <button class="e_button" href= "mailto:${element.contact_info.email}" target="_top">Send me a mail</button></p>
-
-            <p><button data-fancybox-close class="button">Close</button></p>
+            <p><span>Contact</span> <button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>
+            
+            <p><button data-fancybox-close  class="c_button">Close</button></p>
             </div>
             </td>
             `

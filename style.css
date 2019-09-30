@@ -3,7 +3,7 @@
   font-family: Verdana;
 }
 
-.span {
+span {
   font-weight: bold;
 }
 
@@ -35,6 +35,17 @@ header h2 {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 100%;
 }
+.c_button {
+  border-radius: 4px;
+  background-color: rgb(196, 69, 69);
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 100%;
+}
 
 .e_button {
   display: inline-block;
@@ -44,12 +55,17 @@ header h2 {
   color: #FFFFFF;
   text-align: center;
   cursor: pointer;
-  padding: 3px;
+  padding: 10px;
 }
+
 
 .thewindow {
   display: none;
   max-width: 500px;
+  padding: 30px;
+}
+.thewindow p{
+  padding: 20px;
 }
 
 /* table */
@@ -65,4 +81,8 @@ tbody tr:hover {
 
 td {
   padding: 10px;
+}
+#mail{
+  text-decoration: none;
+  color: white;
 }
