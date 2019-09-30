@@ -8,12 +8,26 @@ span {
 }
 
 /* header */
+.mycheckboxs {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+}
+
+#checkroles {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  height: 100px;
+  background-color: rgba(0, 0, 0, .075);
+  padding: 10px;
+}
 
 header {
   height: 250px;
   background-image: url(./images/banner.gif);
   background-color: rgba(250, 250, 250);
-  background-size:contain;
+  background-size: contain;
   background-repeat: no-repeat;
   font-size: 50px;
   text-align: end;
@@ -35,6 +49,7 @@ header h2 {
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 100%;
 }
+
 .c_button {
   border-radius: 4px;
   background-color: rgb(196, 69, 69);
@@ -64,8 +79,12 @@ header h2 {
   max-width: 500px;
   padding: 30px;
 }
-.thewindow p{
+
+.thewindow p,
+h3 {
+  text-align: center;
   padding: 20px;
+
 }
 
 /* table */
@@ -82,7 +101,8 @@ tbody tr:hover {
 td {
   padding: 10px;
 }
-#mail{
+
+#mail {
   text-decoration: none;
   color: white;
 }
