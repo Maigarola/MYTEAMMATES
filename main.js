@@ -64,6 +64,9 @@ fetch(url, {}).then(function (response) {
     document.getElementById("up").addEventListener("click", () => orderup(searchfilter()));
     document.getElementById("down").addEventListener("click", () => orderdown(searchfilter()));
 
+
+    printtable(myteammates);
+
     function whochecked() {
         let wchecked = [];
         for (let i = 0; i < checkroles.length; i++) {
@@ -74,8 +77,6 @@ fetch(url, {}).then(function (response) {
         }
         return wchecked;
     }
-
-    printtable(myteammates);
 
     function orderup(lista) {
         console.log("funciono hacia arriba");
@@ -95,33 +96,38 @@ fetch(url, {}).then(function (response) {
 
     function searchfilter() {
 
-        document.getElementById("t_body").innerHTML = "";
+        document.getElementById("t_body").innerHTML = ""; //clean table
 
-
+        //set values
         let s = document.getElementById("tsearch").value;
         let c = whochecked();
 
         let filtered = [];
 
         for (let i = 0; i < myteammates.length; i++) {
-            if (c.length == 0 && s == "") {
+            if (c.length == 0 && s == "") { //we must see all the registres
                 filtered = myteammates;
             } else {
-                if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) {
+                if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) { // c&s filtered
                     filtered.push(myteammates[i]);
                 }
             }
-            if (filtered.length == 0) {
-                document.getElementById("t_body").innerHTML = "NO CRITERIA";
-            } else {
 
-                printtable(filtered);
-            }
+        }
+        if (filtered.length == 0) { //no data
+
+            let t_body = document.getElementById("t_body");
+            let nodata = document.createElement("img");
+            nodata.setAttribute("src", "./images/nodata.png");
+            t_body.append(nodata);
+
+        } else { //data filtered
+            printtable(filtered);
         }
         return filtered;
     }
 
-    function printtable(lista) {
+    function printtable(lista) { //typical print
 
         let template = " ";
 
@@ -141,7 +147,7 @@ fetch(url, {}).then(function (response) {
 
     }
 
-    function window(element) {
+    function window(element) { //function for showing fancy
 
         let template = "";
         ournick = (element.contact_info.nickName).replace(/\s/g, "_");

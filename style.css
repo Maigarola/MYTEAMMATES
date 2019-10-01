@@ -6,9 +6,16 @@
 span {
   font-weight: bold;
 }
-#up, #down{
-  height : 15px;
+
+#up,
+#down {
+  height: 15px;
 }
+img{
+  height: 300px;
+  border-radius: 20px;
+}
+
 /* header */
 .filters {
   background-color: rgba(0, 0, 0, .075);
@@ -32,7 +39,7 @@ span {
 #searching {
   display: flex;
   justify-content: center;
-  padding:10px;
+  padding: 10px;
   height: 30px;
 
 }
@@ -54,7 +61,7 @@ header h2 {
 /* buttons */
 .button {
   border-radius: 4px;
-  background-color: #207420;
+  background-color: #338db1;
   border: none;
   color: #FFFFFF;
   text-align: center;
@@ -66,9 +73,9 @@ header h2 {
 
 .c_button {
   border-radius: 4px;
-  background-color: rgb(196, 69, 69);
+  background-color: rgb(219, 199, 116)  ;
   border: none;
-  color: #FFFFFF;
+  color: black;;
   text-align: center;
   cursor: pointer;
   padding: 10px;
@@ -79,7 +86,7 @@ header h2 {
 .e_button {
   display: inline-block;
   border-radius: 4px;
-  background-color: #207474;
+  background-color: #889999;
   border: none;
   color: #FFFFFF;
   text-align: center;
@@ -119,4 +126,11 @@ td {
 #mail {
   text-decoration: none;
   color: white;
+}
+#t_body img{
+  position: absolute;
+  left: 20%;
+  height: 400px;
+  text-align: center;
+
 }
