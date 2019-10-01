@@ -51,12 +51,18 @@ fetch(url, {}).then(function (response) {
     heresearchfilters.append(bsearch);
 
     //eventlisteners
+
+    //search
     document.getElementById("bsearch").addEventListener("click", searchfilter);
+
+    //
     for (let i = 0; i < checkroles.length; i++) {
         document.getElementById(checkroles[i].replace(/\s/g, "-")).addEventListener("click", searchfilter);
     }
-    document.getElementById("order").addEventListener("click", searchfilter);
+    //order
 
+    document.getElementById("up").addEventListener("click", () => orderup(searchfilter()));
+    document.getElementById("down").addEventListener("click", () => orderdown(searchfilter()));
 
     function whochecked() {
         let wchecked = [];
@@ -70,6 +76,22 @@ fetch(url, {}).then(function (response) {
     }
 
     printtable(myteammates);
+
+    function orderup(lista) {
+        console.log("funciono hacia arriba");
+        lista.sort(function (a, b) {
+            return (b.age - a.age);
+        });
+        printtable(lista);
+    }
+
+    function orderdown(lista) {
+        console.log("funciono hacia abajo");
+        lista.sort(function (a, b) {
+            return (a.age - b.age);
+        });
+        printtable(lista);
+    }
 
     function searchfilter() {
 
@@ -96,6 +118,7 @@ fetch(url, {}).then(function (response) {
                 printtable(filtered);
             }
         }
+        return filtered;
     }
 
     function printtable(lista) {

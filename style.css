@@ -6,7 +6,9 @@
 span {
   font-weight: bold;
 }
-
+#up, #down{
+  height : 15px;
+}
 /* header */
 .filters {
   background-color: rgba(0, 0, 0, .075);
