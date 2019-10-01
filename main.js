@@ -4,10 +4,10 @@
 let url = "https://api.myjson.com/bins/adpvt";
 
 fetch(url, {}).then(function (response) {
-if (response.ok) {
-    return response.json();
-}
-throw new Error(response.statusText);
+    if (response.ok) {
+        return response.json();
+    }
+    throw new Error(response.statusText);
 
 }).then(function (json) {
 
@@ -82,28 +82,28 @@ throw new Error(response.statusText);
         let filtered = [];
 
         for (let i = 0; i < myteammates.length; i++) {
-
             if (c.length == 0 && s == "") {
                 filtered = myteammates;
             } else {
                 if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) {
-                filtered.push(myteammates[i]);
+                    filtered.push(myteammates[i]);
+                }
+            }
+            if (filtered.length == 0) {
+                document.getElementById("t_body").innerHTML = "NO CRITERIA";
+            } else {
 
-
+                printtable(filtered);
             }
         }
     }
-    console.log(filtered);
-    printtable(filtered);
 
-}
+    function printtable(lista) {
 
-function printtable(lista) {
+        let template = " ";
 
-    let template = " ";
-
-    for (let i = 0; i < lista.length; i++) {
-        template += `
+        for (let i = 0; i < lista.length; i++) {
+            template += `
             <tr>
                 <td> ${lista[i].name}</td>
                 <td> ${lista[i].age}</td>
@@ -113,16 +113,16 @@ function printtable(lista) {
                 ${window(lista[i])} 
             </tr>`;
 
-        table_body.innerHTML = template;
+            table_body.innerHTML = template;
+        }
+
     }
 
-}
+    function window(element) {
 
-function window(element) {
-
-    let template = "";
-    ournick = (element.contact_info.nickName).replace(/\s/g, "_");
-    template += `
+        let template = "";
+        ournick = (element.contact_info.nickName).replace(/\s/g, "_");
+        template += `
         <td ><button class="button" data-fancybox data-options='{"src":"#${ournick}","touch": false, "smallBtn" : false}' href="javascript:;">More info</button>            
         <div class = "thewindow" id= "${ournick}">
             <h3>${element.name}</h3>
@@ -132,33 +132,33 @@ function window(element) {
             <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
             <p><span>Contact</span>`
 
-    if (element.contact_info.email == null) {
-        template += ` We don't have any contact info`
-    } else {
-        template += ` <button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
-    }
+        if (element.contact_info.email == null) {
+            template += ` We don't have any contact info`
+        } else {
+            template += ` <button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
+        }
 
-    template += `
+        template += `
             <p><button data-fancybox-close  class="c_button">Close</button></p>
             </div>
             </td>`
 
-    return template;
+        return template;
 
-}
-
-function howmanyroles(lista) {
-
-    let roles = [];
-
-    for (let i = 0; i < lista.length; i++) {
-        if (!roles.includes(lista[i].role)) {
-            roles.push(lista[i].role);
-        }
     }
-    roles.sort();
-    return roles;
-}
+
+    function howmanyroles(lista) {
+
+        let roles = [];
+
+        for (let i = 0; i < lista.length; i++) {
+            if (!roles.includes(lista[i].role)) {
+                roles.push(lista[i].role);
+            }
+        }
+        roles.sort();
+        return roles;
+    }
 
 
 }).catch(function (error) {
