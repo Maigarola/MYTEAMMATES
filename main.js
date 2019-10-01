@@ -4,10 +4,10 @@
 let url = "https://api.myjson.com/bins/adpvt";
 
 fetch(url, {}).then(function (response) {
-    if (response.ok) {
-        return response.json();
-    }
-    throw new Error(response.statusText);
+if (response.ok) {
+    return response.json();
+}
+throw new Error(response.statusText);
 
 }).then(function (json) {
 
@@ -72,29 +72,38 @@ fetch(url, {}).then(function (response) {
     printtable(myteammates);
 
     function searchfilter() {
+
         document.getElementById("t_body").innerHTML = "";
-        let sfiltered = [];
+
+
         let s = document.getElementById("tsearch").value;
         let c = whochecked();
 
+        let filtered = [];
+
         for (let i = 0; i < myteammates.length; i++) {
-            if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && (c.includes(myteammates[i].role))) {
-                sfiltered.push(myteammates[i]);
+
+            if (c.length == 0 && s == "") {
+                filtered = myteammates;
+            } else {
+                if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) {
+                filtered.push(myteammates[i]);
+
+
             }
         }
-        if (sfiltered.length==0){
-            printtable(myteammates);
-        }
-        printtable(sfiltered);
-
     }
+    console.log(filtered);
+    printtable(filtered);
 
-    function printtable(lista) {
+}
 
-        let template = " ";
+function printtable(lista) {
 
-        for (let i = 0; i < lista.length; i++) {
-            template += `
+    let template = " ";
+
+    for (let i = 0; i < lista.length; i++) {
+        template += `
             <tr>
                 <td> ${lista[i].name}</td>
                 <td> ${lista[i].age}</td>
@@ -104,16 +113,16 @@ fetch(url, {}).then(function (response) {
                 ${window(lista[i])} 
             </tr>`;
 
-            table_body.innerHTML = template;
-        }
-
+        table_body.innerHTML = template;
     }
 
-    function window(element) {
+}
 
-        let template = "";
-        ournick = (element.contact_info.nickName).replace(/\s/g, "_");
-        template += `
+function window(element) {
+
+    let template = "";
+    ournick = (element.contact_info.nickName).replace(/\s/g, "_");
+    template += `
         <td ><button class="button" data-fancybox data-options='{"src":"#${ournick}","touch": false, "smallBtn" : false}' href="javascript:;">More info</button>            
         <div class = "thewindow" id= "${ournick}">
             <h3>${element.name}</h3>
@@ -123,33 +132,33 @@ fetch(url, {}).then(function (response) {
             <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
             <p><span>Contact</span>`
 
-        if (element.contact_info.email == null) {
-            template += ` We don't have any contact info`
-        } else {
-            template += ` <button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
-        }
+    if (element.contact_info.email == null) {
+        template += ` We don't have any contact info`
+    } else {
+        template += ` <button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
+    }
 
-        template += `
+    template += `
             <p><button data-fancybox-close  class="c_button">Close</button></p>
             </div>
             </td>`
 
-        return template;
+    return template;
 
-    }
+}
 
-    function howmanyroles(lista) {
+function howmanyroles(lista) {
 
-        let roles = [];
+    let roles = [];
 
-        for (let i = 0; i < lista.length; i++) {
-            if (!roles.includes(lista[i].role)) {
-                roles.push(lista[i].role);
-            }
+    for (let i = 0; i < lista.length; i++) {
+        if (!roles.includes(lista[i].role)) {
+            roles.push(lista[i].role);
         }
-        roles.sort();
-        return roles;
     }
+    roles.sort();
+    return roles;
+}
 
 
 }).catch(function (error) {
