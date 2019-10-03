@@ -78,7 +78,6 @@ fetch(url, {}).then(function (response) {
     }
 
     function orderup(lista) {
-        console.log("funciono hacia arriba");
         lista.sort(function (a, b) {
             return (b.age - a.age);
         });
@@ -86,7 +85,6 @@ fetch(url, {}).then(function (response) {
     }
 
     function orderdown(lista) {
-        console.log("funciono hacia abajo");
         lista.sort(function (a, b) {
             return (a.age - b.age);
         });
@@ -148,63 +146,65 @@ fetch(url, {}).then(function (response) {
 
             for (let j in element) {
                 let td = document.createElement("td");
+
                 if (typeof (element[j]) == 'object') {
 
-                    let nm = element[j].nickName;
+                    let nm = element[j].nickName.replace(/\s/g, "-");
+                    let nmopen = nm.concat("-open");
+                    let nmclose = nm.concat("-close");
 
                     //button moreinfo
                     let moreinfo = document.createElement("button");
-                    moreinfo.setAttribute("id", nm.replace(/\s/g, "-").concat("open"));
-                    console.log(nm.replace(/\s/g, "-").concat("open"));
+                    moreinfo.setAttribute("id", nmopen);
                     moreinfo.setAttribute("class", "button");
                     moreinfo.innerHTML = "More info";
 
                     //the modal
                     let div = document.createElement("div");
-                    div.setAttribute("id", nm.replace(/\s/g, "-"));
+                    div.setAttribute("id", nm);
                     div.setAttribute("class", "modal");
 
                     //modal content
                     let c_div = document.createElement("div");
-                    c_div.setAttribute("class", "modal-window");
+                    c_div.setAttribute("class", "modal-content");
 
                     let name = document.createElement("h3");
                     name.innerHTML = element.name;
 
                     let b_close = document.createElement("button");
-                    b_close.setAttribute("id", nm.replace(/\s/g, "-").concat("close"));
-                    console.log(nm.replace(/\s/g, "-").concat("close"));
+                    b_close.setAttribute("id", nmclose);
                     b_close.innerHTML = "Close";
 
                     c_div.append(name, b_close);
 
-                    let modal = document.getElementById(nm.replace(/\s/g, "-"));
-                    console.log(nm.replace(/\s/g, "-"));
-
-
+                    let mymodal = document.getElementById(nm);
 
                     div.append(c_div);
                     moreinfo.append(div);
                     td.append(moreinfo);
                     tr.append(td);
-                    // document.getElementById(nm.replace(/\s/g, "-").concat("open")).addEventListener("click", openModal);
-                    // document.getElementById(nm.replace(/\s/g, "-").concat("close")).addEventListener("click", closeModal);
+                    
+                    console.log(typeof(nmopen));
+                    document.getElementById(nmopen).addEventListener("click", () => openModal(mymodal));
+
+                    //NO SE PORQUE ME DA ERROR EL ID, SI LO HE CREADO Y EN EL ELEMENTS SE VE QUE SE HA CREADO PERFECTO Y ES UN STRING Y CADA UNO TIENE EL SUYO
+                    // document.getElementById(nmclose).addEventListener("click", closeModal);
 
                 } else {
-
                     td.innerHTML = element[j];
                 }
                 tr.append(td);
             }
             table_body.append(tr);
 
-            function openModal() {
-                modal.style.display = "block";
-            }
+        }
 
-            function closeModal() {
-                modal.style.display = "none";
-            }
+        function openModal(modal) {
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
         }
     }
 
