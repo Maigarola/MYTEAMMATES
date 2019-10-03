@@ -64,7 +64,6 @@ fetch(url, {}).then(function (response) {
     document.getElementById("up").addEventListener("click", () => orderup(searchfilter()));
     document.getElementById("down").addEventListener("click", () => orderdown(searchfilter()));
 
-
     printtable(myteammates);
 
     function whochecked() {
@@ -127,73 +126,6 @@ fetch(url, {}).then(function (response) {
         return filtered;
     }
 
-    function printtable(lista) { //typical print
-
-        for (let i = 0; i < lista.length; i++) {
-
-            let tr = document.createElement("tr");
-            let element = lista[i];
-
-            for (let j in element) {
-                let td = document.createElement("td");
-                if (typeof (element[j]) == 'object') {
-                    let c_info = element[j];
-
-                    //button moreinfo
-                    let moreinfo = document.createElement("button");
-                    moreinfo.setAttribute("id", "myBtn")
-                    moreinfo.setAttribute("class", "button");
-                    moreinfo.innerHTML = "More info";
-
-                    //the modal
-                    let div = document.createElement("div");
-                    div.setAttribute("id", "myModal");
-                    div.setAttribute("class", "modal");
-
-                    //modal content
-                    let c_div = document.createElement("div");
-                    c_div.setAttribute("class", "modal-window");
-
-                    let name = document.createElement("h3");
-                    name.innerHTML = element.name;
-
-                    let b_close = document.createElement("span");
-                    b_close.setAttribute("id", "close");
-                    b_close.innerHTML = "Close";
-
-                    c_div.append(name, b_close);
-
-                    div.append(c_div);
-                    moreinfo.append(div);
-                    td.append(moreinfo);
-                    tr.append(td);
-                } else {
-                    td.innerHTML = element[j];
-                }
-                tr.append(td);
-
-            }
-            table_body.append(tr);
-        }
-
-        var modal = document.getElementById("myModal");
-
-        document.getElementById("myBtn").addEventListener("click", openModal);
-
-        document.getElementById("close").addEventListener("click", closeModal);
-
-        function openModal() {
-            console.log("HELLO");
-            modal.style.display = "block";
-        }
-
-        function closeModal() {
-            console.log("ADEU");
-            modal.style.display = "none";
-        }
-
-    }
-
     function howmanyroles(lista) {
 
         let roles = [];
@@ -206,6 +138,76 @@ fetch(url, {}).then(function (response) {
         roles.sort();
         return roles;
     }
+
+    function printtable(lista) { //typical print
+
+        for (let i = 0; i < lista.length; i++) {
+
+            let tr = document.createElement("tr");
+            let element = lista[i];
+
+            for (let j in element) {
+                let td = document.createElement("td");
+                if (typeof (element[j]) == 'object') {
+
+                    let nm = element[j].nickName;
+
+                    //button moreinfo
+                    let moreinfo = document.createElement("button");
+                    moreinfo.setAttribute("id", nm.replace(/\s/g, "-").concat("open"));
+                    console.log(nm.replace(/\s/g, "-").concat("open"));
+                    moreinfo.setAttribute("class", "button");
+                    moreinfo.innerHTML = "More info";
+
+                    //the modal
+                    let div = document.createElement("div");
+                    div.setAttribute("id", nm.replace(/\s/g, "-"));
+                    div.setAttribute("class", "modal");
+
+                    //modal content
+                    let c_div = document.createElement("div");
+                    c_div.setAttribute("class", "modal-window");
+
+                    let name = document.createElement("h3");
+                    name.innerHTML = element.name;
+
+                    let b_close = document.createElement("button");
+                    b_close.setAttribute("id", nm.replace(/\s/g, "-").concat("close"));
+                    console.log(nm.replace(/\s/g, "-").concat("close"));
+                    b_close.innerHTML = "Close";
+
+                    c_div.append(name, b_close);
+
+                    let modal = document.getElementById(nm.replace(/\s/g, "-"));
+                    console.log(nm.replace(/\s/g, "-"));
+
+
+
+                    div.append(c_div);
+                    moreinfo.append(div);
+                    td.append(moreinfo);
+                    tr.append(td);
+                    // document.getElementById(nm.replace(/\s/g, "-").concat("open")).addEventListener("click", openModal);
+                    // document.getElementById(nm.replace(/\s/g, "-").concat("close")).addEventListener("click", closeModal);
+
+                } else {
+
+                    td.innerHTML = element[j];
+                }
+                tr.append(td);
+            }
+            table_body.append(tr);
+
+            function openModal() {
+                modal.style.display = "block";
+            }
+
+            function closeModal() {
+                modal.style.display = "none";
+            }
+        }
+    }
+
 
 
 }).catch(function (error) {
