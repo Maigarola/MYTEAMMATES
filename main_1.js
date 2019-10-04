@@ -167,18 +167,47 @@ fetch(url, {}).then(function (response) {
             }
             table_body.append(tr);
         }
-        
+
         for (let i = 0; i < lista.length; i++) {
             let nm = lista[i].contact_info.nickName.replace(/\s/g, "-");
             let point = document.getElementById(nm);
-            point.addEventListener("click",() => createModal(lista[i]));            
+            point.addEventListener("click", () => createModal(lista[i]));
         }
 
 
     }
 
     function createModal(element) {
-        console.log("createmodal");
+
+        let ournick = element.contact_info.nickName.replace(/\s/g, "-");
+        var modal = document.getElementById(ournick);
+        console.log(element);
+
+        modal.style.display = "block";
+       
+        let template = "";
+
+        template += `
+        <div id= "${ournick}" class = "modal" >
+            <h3>${element.name}</h3>
+            <img src="${element.contact_info.photo}" alt="photo"> 
+            <p><span>NickName</span> ${element.contact_info.nickName} </p>
+            <p><span>Phone</span> ${element.contact_info.phone} </p>
+            <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
+            <p><span>Contact</span>`
+
+        if (element.contact_info.email == null) {
+            template += ` We don't have any contact info`
+        } else {
+            template += ` <button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
+        }
+
+        template += `
+            <p><button id = "close" class="c_button close">Close</button></p>
+            </div>
+            </td>`
+
+        modal.innerHTML = template;
     }
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
