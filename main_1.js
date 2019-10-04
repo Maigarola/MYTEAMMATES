@@ -183,8 +183,6 @@ fetch(url, {}).then(function (response) {
         let nm = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
         let nmclose = element.contact_info.nickName.replace(/\s/g, "-").concat("close");
 
-        console.log(element);
-
         let template = "";
 
         template += `
@@ -203,7 +201,7 @@ fetch(url, {}).then(function (response) {
         }
 
         template += `
-            <p><button id =  ${nmclose} class="c_button">Close</button></p>
+            <p><button id = ${nmclose} class="c_button">Close</button></p>
             </div>
             </td>`
 
@@ -213,6 +211,15 @@ fetch(url, {}).then(function (response) {
         divmodal.setAttribute("class", "modal");
         mymodal.append(divmodal);
         divmodal.innerHTML = template;
+
+        let closebutton = document.getElementById(nmclose);
+        closebutton.addEventListener("click", closemodal);
+
+        function closemodal() {
+            document.getElementById(nmopen).style.display = "none";
+        }
+
+
     }
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
