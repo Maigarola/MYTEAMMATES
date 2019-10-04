@@ -150,45 +150,15 @@ fetch(url, {}).then(function (response) {
                 if (typeof (element[j]) == 'object') {
 
                     let nm = element[j].nickName.replace(/\s/g, "-");
-                    let nmopen = nm.concat("-open");
-                    let nmclose = nm.concat("-close");
 
                     //button moreinfo
                     let moreinfo = document.createElement("button");
-                    moreinfo.setAttribute("id", nmopen);
+                    moreinfo.setAttribute("id", nm);
                     moreinfo.setAttribute("class", "button");
                     moreinfo.innerHTML = "More info";
 
-                    //the modal
-                    let div = document.createElement("div");
-                    div.setAttribute("id", nm);
-                    div.setAttribute("class", "modal");
-
-                    //modal content
-                    let c_div = document.createElement("div");
-                    c_div.setAttribute("class", "modal-content");
-
-                    let name = document.createElement("h3");
-                    name.innerHTML = element.name;
-
-                    let b_close = document.createElement("button");
-                    b_close.setAttribute("id", nmclose);
-                    b_close.innerHTML = "Close";
-
-                    c_div.append(name, b_close);
-
-                    let mymodal = document.getElementById(nm);
-
-                    div.append(c_div);
-                    moreinfo.append(div);
                     td.append(moreinfo);
                     tr.append(td);
-                    
-                    console.log(typeof(nmopen));
-                    document.getElementById(nmopen).addEventListener("click", () => openModal(mymodal));
-
-                    //NO SE PORQUE ME DA ERROR EL ID, SI LO HE CREADO Y EN EL ELEMENTS SE VE QUE SE HA CREADO PERFECTO Y ES UN STRING Y CADA UNO TIENE EL SUYO
-                    // document.getElementById(nmclose).addEventListener("click", closeModal);
 
                 } else {
                     td.innerHTML = element[j];
@@ -196,20 +166,20 @@ fetch(url, {}).then(function (response) {
                 tr.append(td);
             }
             table_body.append(tr);
-
+        }
+        
+        for (let i = 0; i < lista.length; i++) {
+            let nm = lista[i].contact_info.nickName.replace(/\s/g, "-");
+            let point = document.getElementById(nm);
+            point.addEventListener("click",() => createModal(lista[i]));            
         }
 
-        function openModal(modal) {
-            modal.style.display = "block";
-        }
 
-        function closeModal() {
-            modal.style.display = "none";
-        }
     }
 
-
-
+    function createModal(element) {
+        console.log("createmodal");
+    }
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
 });
