@@ -1,10 +1,10 @@
 // Get the modal
-var modal = document.getElementById("myModal");
+var modal = document.getElementById("nmodal");
 
 // Get the button that opens the modal
 
-document.getElementById("myBtn").addEventListener("click", openModal);
-document.getElementById("close").addEventListener("click", closeModal);
+document.getElementById("nmopen").addEventListener("click", openModal);
+document.getElementById("nmclose").addEventListener("click", closeModal);
 
 
 function openModal() {

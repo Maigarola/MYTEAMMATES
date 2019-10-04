@@ -123,6 +123,7 @@ img {
 }
 
 .modal {
+  display:none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -136,13 +137,10 @@ img {
 
 /* Modal Content/Box */
 .modal-content {
-  
   color: black;
   background-color: #fefefe;
   margin: 10% auto;
-  /* 15% from the top and centered */
   padding: 20px;
   border: 1px solid #888;
   width: 30%;
-  /* Could be more or less, depending on screen size */
 }

@@ -71,7 +71,6 @@ fetch(url, {}).then(function (response) {
         for (let i = 0; i < checkroles.length; i++) {
             if (document.getElementById(checkroles[i].replace(/\s/g, "-")).checked) {
                 wchecked.push(checkroles[i]);
-
             }
         }
         return wchecked;
@@ -139,6 +138,11 @@ fetch(url, {}).then(function (response) {
 
     function printtable(lista) { //typical print
 
+        // de esta manera cada vez que hace print se asegura de que la tabla esté vacía
+
+        let erase = document.getElementById("t_body");
+        erase.innerHTML = " ";
+
         for (let i = 0; i < lista.length; i++) {
 
             let tr = document.createElement("tr");
@@ -169,24 +173,22 @@ fetch(url, {}).then(function (response) {
         }
 
         for (let i = 0; i < lista.length; i++) {
-            let nm = lista[i].contact_info.nickName.replace(/\s/g, "-");
-            let point = document.getElementById(nm);
+            let nmo = lista[i].contact_info.nickName.replace(/\s/g, "-");
+            let point = document.getElementById(nmo);
             point.addEventListener("click", () => createModal(lista[i]));
         }
-
-
     }
 
     function createModal(element) {
 
         let nmopen = element.contact_info.nickName.replace(/\s/g, "-");
-        let nm = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
+        let nmodal = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
         let nmclose = element.contact_info.nickName.replace(/\s/g, "-").concat("close");
 
         let template = "";
 
         template += `
-            <div class = "modal-content">
+            <div  class = "modal-content">
             <h3>${element.name}</h3>
             <p><img src="${element.contact_info.photo}" alt="photo"></p>
             <p><span>NickName</span> ${element.contact_info.nickName} </p>
@@ -197,30 +199,32 @@ fetch(url, {}).then(function (response) {
         if (element.contact_info.email == null) {
             template += ` We don't have any contact info`
         } else {
-            template += ` <button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
+            template += `<button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
         }
-
         template += `
             <p><button id = ${nmclose} class="c_button">Close</button></p>
             </div>
             </td>`
 
-        let mymodal = document.getElementById(nmopen);
+        let mymodal = document.getElementById("t_body");
         let divmodal = document.createElement("div");
-        divmodal.setAttribute("id", nm);
+        divmodal.setAttribute("id", nmodal);
         divmodal.setAttribute("class", "modal");
         mymodal.append(divmodal);
         divmodal.innerHTML = template;
 
+        document.getElementById(nmodal).style.display = "block";
+
         let closebutton = document.getElementById(nmclose);
-        closebutton.addEventListener("click", closemodal);
+        closebutton.addEventListener("click", () => closemodal(element));
+    }
 
-        function closemodal() {
-            document.getElementById(nmopen).style.display = "none";
-        }
-
+    function closemodal(element) {
+        let nmymodal = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
+        document.getElementById(nmymodal).style.display = "none";
 
     }
+
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
 });
