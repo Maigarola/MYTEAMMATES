@@ -6,12 +6,10 @@
 span {
   font-weight: bold;
 }
-
 #up,
 #down {
   height: 15px;
 }
-
 
 /* header */
 .filters {
@@ -146,6 +144,8 @@ img {
 
 /* Modal Content/Box */
 .modal-content {
+  
+  color: black;
   background-color: #fefefe;
   margin: 15% auto;
   /* 15% from the top and centered */
