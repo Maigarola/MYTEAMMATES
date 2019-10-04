@@ -179,18 +179,18 @@ fetch(url, {}).then(function (response) {
 
     function createModal(element) {
 
-        let ournick = element.contact_info.nickName.replace(/\s/g, "-");
-        var modal = document.getElementById(ournick);
+        let nmopen = element.contact_info.nickName.replace(/\s/g, "-");
+        let nm = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
+        let nmclose = element.contact_info.nickName.replace(/\s/g, "-").concat("close");
+
         console.log(element);
 
-        modal.style.display = "block";
-       
         let template = "";
 
         template += `
-        <div id= "${ournick}" class = "modal" >
+            <div class = "modal-content">
             <h3>${element.name}</h3>
-            <img src="${element.contact_info.photo}" alt="photo"> 
+            <p><img src="${element.contact_info.photo}" alt="photo"></p>
             <p><span>NickName</span> ${element.contact_info.nickName} </p>
             <p><span>Phone</span> ${element.contact_info.phone} </p>
             <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
@@ -203,11 +203,16 @@ fetch(url, {}).then(function (response) {
         }
 
         template += `
-            <p><button id = "close" class="c_button close">Close</button></p>
+            <p><button id =  ${nmclose} class="c_button">Close</button></p>
             </div>
             </td>`
 
-        modal.innerHTML = template;
+        let mymodal = document.getElementById(nmopen);
+        let divmodal = document.createElement("div");
+        divmodal.setAttribute("id", nm);
+        divmodal.setAttribute("class", "modal");
+        mymodal.append(divmodal);
+        divmodal.innerHTML = template;
     }
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
