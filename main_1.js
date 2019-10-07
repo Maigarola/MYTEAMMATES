@@ -11,9 +11,7 @@ fetch(url, {}).then(function (response) {
 
 }).then(function (json) {
 
-    data = json;
-
-    let myteammates = data.people;
+    let myteammates = json.people;
     let table_body = document.getElementById("t_body");
     let herecheckfilters = document.getElementById("checkroles");
     let heresearchfilters = document.getElementById("searching");
@@ -43,98 +41,25 @@ fetch(url, {}).then(function (response) {
     search.type = "search";
     search.placeholder = "Search...";
     search.id = "tsearch";
-    let bsearch = document.createElement("button");
-    bsearch.setAttribute("id", "bsearch");
-    bsearch.append(document.createTextNode("Search!"));
 
     heresearchfilters.append(search);
-    heresearchfilters.append(bsearch);
 
     //eventlisteners
 
     //search
-    document.getElementById("bsearch").addEventListener("click", searchfilter);
+    document.getElementById("tsearch").addEventListener("keyup", searchfilter);
 
-    //
+    //moreinfo eventlistener
     for (let i = 0; i < checkroles.length; i++) {
         document.getElementById(checkroles[i].replace(/\s/g, "-")).addEventListener("click", searchfilter);
     }
     //order
 
-    document.getElementById("up").addEventListener("click", () => orderup(searchfilter()));
-    document.getElementById("down").addEventListener("click", () => orderdown(searchfilter()));
+    document.getElementById("up").addEventListener("click", () => order(searchfilter(), "up"));
+    document.getElementById("down").addEventListener("click", () => order(searchfilter(), "down"));
 
     printtable(myteammates);
 
-    function whochecked() {
-        let wchecked = [];
-        for (let i = 0; i < checkroles.length; i++) {
-            if (document.getElementById(checkroles[i].replace(/\s/g, "-")).checked) {
-                wchecked.push(checkroles[i]);
-            }
-        }
-        return wchecked;
-    }
-
-    function orderup(lista) {
-        lista.sort(function (a, b) {
-            return (b.age - a.age);
-        });
-        printtable(lista);
-    }
-
-    function orderdown(lista) {
-        lista.sort(function (a, b) {
-            return (a.age - b.age);
-        });
-        printtable(lista);
-    }
-
-    function searchfilter() {
-
-        document.getElementById("t_body").innerHTML = ""; //clean table
-
-        //set values
-        let s = document.getElementById("tsearch").value;
-        let c = whochecked();
-
-        let filtered = [];
-
-        for (let i = 0; i < myteammates.length; i++) {
-            if (c.length == 0 && s == "") { //we must see all the registres
-                filtered = myteammates;
-            } else {
-                if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) { // c&s filtered
-                    filtered.push(myteammates[i]);
-                }
-            }
-
-        }
-        if (filtered.length == 0) { //no data
-
-            let t_body = document.getElementById("t_body");
-            let nodata = document.createElement("img");
-            nodata.setAttribute("src", "./images/nodata.png");
-            t_body.append(nodata);
-
-        } else { //data filtered
-            printtable(filtered);
-        }
-        return filtered;
-    }
-
-    function howmanyroles(lista) {
-
-        let roles = [];
-
-        for (let i = 0; i < lista.length; i++) {
-            if (!roles.includes(lista[i].role)) {
-                roles.push(lista[i].role);
-            }
-        }
-        roles.sort();
-        return roles;
-    }
 
     function printtable(lista) { //typical print
 
@@ -179,52 +104,127 @@ fetch(url, {}).then(function (response) {
         }
     }
 
-    function createModal(element) {
+    //FILTERS
 
-        let nmopen = element.contact_info.nickName.replace(/\s/g, "-");
-        let nmodal = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
-        let nmclose = element.contact_info.nickName.replace(/\s/g, "-").concat("close");
+    function searchfilter() {
 
-        let template = "";
+        document.getElementById("t_body").innerHTML = ""; //clean table
 
-        template += `
-            <div  class = "modal-content">
-            <h3>${element.name}</h3>
-            <p><img src="${element.contact_info.photo}" alt="photo"></p>
-            <p><span>NickName</span> ${element.contact_info.nickName} </p>
-            <p><span>Phone</span> ${element.contact_info.phone} </p>
-            <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
-            <p><span>Contact</span>`
+        //set values
+        let s = document.getElementById("tsearch").value;
+        let c = whochecked();
 
-        if (element.contact_info.email == null) {
-            template += ` We don't have any contact info`
-        } else {
-            template += `<button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
+        let filtered = [];
+
+        for (let i = 0; i < myteammates.length; i++) {
+            if (c.length == 0 && s == "") { //we must see all the registres
+                filtered = myteammates;
+            } else {
+                if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) { // c&s filtered
+                    filtered.push(myteammates[i]);
+                }
+            }
+
         }
-        template += `
-            <p><button id = ${nmclose} class="c_button">Close</button></p>
-            </div>
-            </td>`
+        if (filtered.length == 0) { //no data
 
-        let mymodal = document.getElementById("t_body");
-        let divmodal = document.createElement("div");
-        divmodal.setAttribute("id", nmodal);
-        divmodal.setAttribute("class", "modal");
-        mymodal.append(divmodal);
-        divmodal.innerHTML = template;
+            let t_body = document.getElementById("t_body");
+            let nodata = document.createElement("img");
+            nodata.setAttribute("src", "./images/nodata.png");
+            t_body.append(nodata);
 
-        document.getElementById(nmodal).style.display = "block";
-
-        let closebutton = document.getElementById(nmclose);
-        closebutton.addEventListener("click", () => closemodal(element));
+        } else { //data filtered
+            printtable(filtered);
+        }
+        return filtered;
     }
 
-    function closemodal(element) {
-        let nmymodal = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
-        document.getElementById(nmymodal).style.display = "none";
-
+    function whochecked() {
+        let wchecked = [];
+        for (let i = 0; i < checkroles.length; i++) {
+            if (document.getElementById(checkroles[i].replace(/\s/g, "-")).checked) {
+                wchecked.push(checkroles[i]);
+            }
+        }
+        return wchecked;
     }
+
+    function order(lista, sense) {
+        if (sense == "up") {
+            lista.sort(function (a, b) {
+                return (b.age - a.age);
+            });
+        } else {
+            lista.sort(function (a, b) {
+                return (a.age - b.age);
+            });
+        }
+        printtable(lista);
+    }
+
 
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
 });
+
+//FILTERS
+
+function howmanyroles(lista) {
+
+    let roles = [];
+
+    for (let i = 0; i < lista.length; i++) {
+        if (!roles.includes(lista[i].role)) {
+            roles.push(lista[i].role);
+        }
+    }
+    roles.sort();
+    return roles;
+}
+
+//THE MODAL
+function createModal(element) {
+
+    let nmopen = element.contact_info.nickName.replace(/\s/g, "-");
+    let nmodal = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
+    let nmclose = element.contact_info.nickName.replace(/\s/g, "-").concat("close");
+
+    let template = "";
+
+    template += `
+        <div  class = "modal-content">
+        <h3>${element.name}</h3>
+        <p><img src="${element.contact_info.photo}" alt="photo"></p>
+        <p><span>NickName</span> ${element.contact_info.nickName} </p>
+        <p><span>Phone</span> ${element.contact_info.phone} </p>
+        <p><span>Site</span> <a href=${element.contact_info.site}> ${element.contact_info.site} </a></p>
+        <p><span>Contact</span>`
+
+    if (element.contact_info.email == null) {
+        template += ` We don't have any contact info`
+    } else {
+        template += `<button class="e_button"><a id="mail" href="mailto:${element.contact_info.email}" target="_top">Send me a mail</button></a></p>`
+    }
+    template += `
+        <p><button id = ${nmclose} class="c_button">Close</button></p>
+        </div>
+        </td>`
+
+    let mymodal = document.getElementById("t_body");
+    let divmodal = document.createElement("div");
+    divmodal.setAttribute("id", nmodal);
+    divmodal.setAttribute("class", "modal");
+    mymodal.append(divmodal);
+    divmodal.innerHTML = template;
+
+    document.getElementById(nmodal).style.display = "block";
+
+    let closebutton = document.getElementById(nmclose);
+    closebutton.addEventListener("click", () => closemodal(element));
+}
+
+function closemodal(element) {
+    let nmymodal = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
+    document.getElementById(nmymodal).style.display = "none";
+
+}

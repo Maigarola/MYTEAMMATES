@@ -1,0 +1,11 @@
+Estaría bien tener un loader.
+The roles estaria bien si hera un dropdown.
+Fetch demasiado cargado
+    - No se pueden declarar funciones dentro, sino declararlas fuera 
+        y llamarlas dentro.
+    - Agrupar cada funcionalidad de tu codico en funciones separadas.
+Uso de variables sin declarar data = json;
+Search tiene que ser sin button, no tiene sentido buscar al con el input vacío 
+    para que aparezcan todos de nuevo. Intenta usar keyUp como eventListener.
+    -El buscador no funciona siempre, Hay una persona que tiene apellido Mos pero cuando escribo mos no sale.
+Order up, order down se puede hacer en una function.
