@@ -6,6 +6,7 @@
 span {
   font-weight: bold;
 }
+
 #up,
 #down {
   height: 15px;
@@ -123,7 +124,7 @@ img {
 }
 
 .modal {
-  display:none;
+  display: none;
   position: fixed;
   z-index: 1;
   left: 0;
@@ -143,4 +144,31 @@ img {
   padding: 20px;
   border: 1px solid #888;
   width: 30%;
+}
+
+/* Loader */
+.loader {
+  margin: 50px;
+  border: 16px solid #f3f3f3;
+  /* Light grey */
+  border-top: 16px solid #536f81;
+  /* Blue */
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.hide-loader {
+  display: none;
 }

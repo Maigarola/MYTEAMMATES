@@ -11,6 +11,8 @@ fetch(url, {}).then(function (response) {
 
 }).then(function (json) {
 
+    document.getElementById("loader1").setAttribute("class", "hide-loader");
+
     let myteammates = json.people;
     let table_body = document.getElementById("t_body");
     let herecheckfilters = document.getElementById("checkroles");
