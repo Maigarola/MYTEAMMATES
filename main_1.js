@@ -50,16 +50,16 @@ fetch(url, {}).then(function (response) {
     //eventlisteners
 
     //search
-    document.getElementById("tsearch").addEventListener("keyup", searchfilter);
+    document.getElementById("tsearch").addEventListener("keyup", () => searchfilter(myteammates));
 
     //moreinfo eventlistener
     for (let i = 0; i < checkroles.length; i++) {
-        document.getElementById(checkroles[i].replace(/\s/g, "-")).addEventListener("click", searchfilter);
+        document.getElementById(checkroles[i].replace(/\s/g, "-")).addEventListener("click", () => printtable(searchfilter(myteammates)));
     }
     //order
 
-    document.getElementById("up").addEventListener("click", () => order(searchfilter(), "up"));
-    document.getElementById("down").addEventListener("click", () => order(searchfilter(), "down"));
+    document.getElementById("up").addEventListener("click", () => printtable(order(searchfilter(myteammates), "up")));
+    document.getElementById("down").addEventListener("click", () => printtable(order(searchfilter(myteammates), "down")));
 
     printtable(myteammates);
 
@@ -108,13 +108,13 @@ fetch(url, {}).then(function (response) {
 
     //FILTERS
 
-    function searchfilter() {
+    function searchfilter(myteammates) {
 
         document.getElementById("t_body").innerHTML = ""; //clean table
 
         //set values
         let s = document.getElementById("tsearch").value.toLowerCase();
-        let c = whochecked();
+        let c = whochecked(myteammates);
 
         let filtered = [];
 
@@ -126,10 +126,8 @@ fetch(url, {}).then(function (response) {
                     filtered.push(myteammates[i]);
                 }
             }
-
         }
         if (filtered.length == 0) { //no data
-
             let t_body = document.getElementById("t_body");
             let nodata = document.createElement("img");
             nodata.setAttribute("src", "./images/nodata.png");
@@ -139,29 +137,6 @@ fetch(url, {}).then(function (response) {
             printtable(filtered);
         }
         return filtered;
-    }
-
-    function whochecked() {
-        let wchecked = [];
-        for (let i = 0; i < checkroles.length; i++) {
-            if (document.getElementById(checkroles[i].replace(/\s/g, "-")).checked) {
-                wchecked.push(checkroles[i]);
-            }
-        }
-        return wchecked;
-    }
-
-    function order(lista, sense) {
-        if (sense == "up") {
-            lista.sort(function (a, b) {
-                return (b.age - a.age);
-            });
-        } else {
-            lista.sort(function (a, b) {
-                return (a.age - b.age);
-            });
-        }
-        printtable(lista);
     }
 
 
@@ -182,6 +157,30 @@ function howmanyroles(lista) {
     }
     roles.sort();
     return roles;
+}
+
+function whochecked(myteammates) {
+    let checkroles = howmanyroles(myteammates);
+    let wchecked = [];
+    for (let i = 0; i < checkroles.length; i++) {
+        if (document.getElementById(checkroles[i].replace(/\s/g, "-")).checked) {
+            wchecked.push(checkroles[i]);
+        }
+    }
+    return wchecked;
+}
+
+function order(lista, sense) {
+    if (sense == "up") {
+        lista.sort(function (a, b) {
+            return (b.age - a.age);
+        });
+    } else {
+        lista.sort(function (a, b) {
+            return (a.age - b.age);
+        });
+    }
+    return (lista);
 }
 
 //THE MODAL
