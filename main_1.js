@@ -113,7 +113,7 @@ fetch(url, {}).then(function (response) {
         document.getElementById("t_body").innerHTML = ""; //clean table
 
         //set values
-        let s = document.getElementById("tsearch").value;
+        let s = document.getElementById("tsearch").value.toLowerCase();
         let c = whochecked();
 
         let filtered = [];
@@ -122,7 +122,7 @@ fetch(url, {}).then(function (response) {
             if (c.length == 0 && s == "") { //we must see all the registres
                 filtered = myteammates;
             } else {
-                if ((myteammates[i].name.includes(s) || myteammates[i].contact_info.nickName.includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) { // c&s filtered
+                if ((myteammates[i].name.toLowerCase().includes(s) || myteammates[i].contact_info.nickName.toLowerCase().includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) { // c&s filtered
                     filtered.push(myteammates[i]);
                 }
             }
