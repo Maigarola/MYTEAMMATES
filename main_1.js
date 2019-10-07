@@ -11,6 +11,7 @@ fetch(url, {}).then(function (response) {
 
 }).then(function (json) {
 
+    //theloader
     document.getElementById("loader1").setAttribute("class", "hide-loader");
 
     let myteammates = json.people;
@@ -61,7 +62,6 @@ fetch(url, {}).then(function (response) {
     document.getElementById("down").addEventListener("click", () => order(searchfilter(), "down"));
 
     printtable(myteammates);
-
 
     function printtable(lista) { //typical print
 
