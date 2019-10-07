@@ -50,7 +50,7 @@ fetch(url, {}).then(function (response) {
     //eventlisteners
 
     //search
-    document.getElementById("tsearch").addEventListener("keyup", () => searchfilter(myteammates));
+    document.getElementById("tsearch").addEventListener("keyup", () => printtable(searchfilter(myteammates)));
 
     //moreinfo eventlistener
     for (let i = 0; i < checkroles.length; i++) {
@@ -63,89 +63,11 @@ fetch(url, {}).then(function (response) {
 
     printtable(myteammates);
 
-    function printtable(lista) { //typical print
-
-        // de esta manera cada vez que hace print se asegura de que la tabla esté vacía
-
-        let erase = document.getElementById("t_body");
-        erase.innerHTML = " ";
-
-        for (let i = 0; i < lista.length; i++) {
-
-            let tr = document.createElement("tr");
-            let element = lista[i];
-
-            for (let j in element) {
-                let td = document.createElement("td");
-
-                if (typeof (element[j]) == 'object') {
-
-                    let nm = element[j].nickName.replace(/\s/g, "-");
-
-                    //button moreinfo
-                    let moreinfo = document.createElement("button");
-                    moreinfo.setAttribute("id", nm);
-                    moreinfo.setAttribute("class", "button");
-                    moreinfo.innerHTML = "More info";
-
-                    td.append(moreinfo);
-                    tr.append(td);
-
-                } else {
-                    td.innerHTML = element[j];
-                }
-                tr.append(td);
-            }
-            table_body.append(tr);
-        }
-
-        for (let i = 0; i < lista.length; i++) {
-            let nmo = lista[i].contact_info.nickName.replace(/\s/g, "-");
-            let point = document.getElementById(nmo);
-            point.addEventListener("click", () => createModal(lista[i]));
-        }
-    }
-
-    //FILTERS
-
-    function searchfilter(myteammates) {
-
-        document.getElementById("t_body").innerHTML = ""; //clean table
-
-        //set values
-        let s = document.getElementById("tsearch").value.toLowerCase();
-        let c = whochecked(myteammates);
-
-        let filtered = [];
-
-        for (let i = 0; i < myteammates.length; i++) {
-            if (c.length == 0 && s == "") { //we must see all the registres
-                filtered = myteammates;
-            } else {
-                if ((myteammates[i].name.toLowerCase().includes(s) || myteammates[i].contact_info.nickName.toLowerCase().includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) { // c&s filtered
-                    filtered.push(myteammates[i]);
-                }
-            }
-        }
-        if (filtered.length == 0) { //no data
-            let t_body = document.getElementById("t_body");
-            let nodata = document.createElement("img");
-            nodata.setAttribute("src", "./images/nodata.png");
-            t_body.append(nodata);
-
-        } else { //data filtered
-            printtable(filtered);
-        }
-        return filtered;
-    }
-
-
 }).catch(function (error) {
     console.log("Request failed: " + error.message);
 });
 
 //FILTERS
-
 function howmanyroles(lista) {
 
     let roles = [];
@@ -181,6 +103,39 @@ function order(lista, sense) {
         });
     }
     return (lista);
+}
+
+function searchfilter(myteammates) {
+
+    let t_body = document.getElementById("t_body");
+    t_body.innerHTML = ""; //clean table
+
+    //set values
+    let s = document.getElementById("tsearch").value.toLowerCase();
+    let c = whochecked(myteammates);
+
+    let filtered = [];
+
+    for (let i = 0; i < myteammates.length; i++) {
+        if (c.length == 0 && s == "") { //we must see all the registres
+            filtered = myteammates;
+        } else {
+            if ((myteammates[i].name.toLowerCase().includes(s) || myteammates[i].contact_info.nickName.toLowerCase().includes(s)) && ((c.includes(myteammates[i].role) || c.length == 0))) { // c&s filtered
+                filtered.push(myteammates[i]);
+            }
+        }
+    }
+    if (filtered.length == 0) { //no data
+        let t_body = document.getElementById("t_body");
+        let nodata = document.createElement("img");
+        nodata.setAttribute("src", "./images/nodata.png");
+        t_body.append(nodata);
+
+    } else { //data filtered
+
+        return filtered;
+    }
+    return filtered;
 }
 
 //THE MODAL
@@ -228,4 +183,48 @@ function closemodal(element) {
     let nmymodal = element.contact_info.nickName.replace(/\s/g, "-").concat("modal");
     document.getElementById(nmymodal).style.display = "none";
 
+}
+
+//PRINT TABLE
+function printtable(lista) { //typical print
+
+    // de esta manera cada vez que hace print se asegura de que la tabla esté vacía
+
+    let table_body = document.getElementById("t_body");
+    table_body.innerHTML = " ";
+
+    for (let i = 0; i < lista.length; i++) {
+
+        let tr = document.createElement("tr");
+        let element = lista[i];
+
+        for (let j in element) {
+            let td = document.createElement("td");
+
+            if (typeof (element[j]) == 'object') {
+
+                let nm = element[j].nickName.replace(/\s/g, "-");
+
+                //button moreinfo
+                let moreinfo = document.createElement("button");
+                moreinfo.setAttribute("id", nm);
+                moreinfo.setAttribute("class", "button");
+                moreinfo.innerHTML = "More info";
+
+                td.append(moreinfo);
+                tr.append(td);
+
+            } else {
+                td.innerHTML = element[j];
+            }
+            tr.append(td);
+        }
+        table_body.append(tr);
+    }
+
+    for (let i = 0; i < lista.length; i++) {
+        let nmo = lista[i].contact_info.nickName.replace(/\s/g, "-");
+        let point = document.getElementById(nmo);
+        point.addEventListener("click", () => createModal(lista[i]));
+    }
 }
