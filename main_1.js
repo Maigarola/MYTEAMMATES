@@ -15,7 +15,6 @@ fetch(url, {}).then(function (response) {
     document.getElementById("loader1").setAttribute("class", "hide-loader");
 
     let myteammates = json.people;
-    let table_body = document.getElementById("t_body");
     let herecheckfilters = document.getElementById("checkroles");
     let heresearchfilters = document.getElementById("searching");
 
@@ -80,7 +79,6 @@ function howmanyroles(lista) {
     roles.sort();
     return roles;
 }
-
 function whochecked(myteammates) {
     let checkroles = howmanyroles(myteammates);
     let wchecked = [];
@@ -91,7 +89,6 @@ function whochecked(myteammates) {
     }
     return wchecked;
 }
-
 function order(lista, sense) {
     if (sense == "up") {
         lista.sort(function (a, b) {
@@ -104,7 +101,6 @@ function order(lista, sense) {
     }
     return (lista);
 }
-
 function searchfilter(myteammates) {
 
     let t_body = document.getElementById("t_body");
